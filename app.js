@@ -227,7 +227,10 @@ function updateStatBoxPreview() {
     else statBoxValue.textContent = "09 Apr '26";
   }
   if (statBoxFrequency) statBoxFrequency.classList.toggle('hidden', !showFrequency);
-  if (statBoxIcon) statBoxIcon.classList.toggle('hidden', !showIcon);
+  if (statBoxIcon) {
+    statBoxIcon.classList.toggle('hidden', !showIcon);
+    statBoxIcon.setAttribute('aria-hidden', String(!showIcon));
+  }
 }
 
 statBoxSizeTabs.forEach(tab => {

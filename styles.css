@@ -93,14 +93,12 @@
 .inputField-icon .ds-icon,
 .dropdownField-chevron .ds-icon,
 .searchField-icon .ds-icon,
-.searchField-clear .ds-icon,
 .keyValueRow-chevron .ds-icon,
 .keyValueRow-keyInfo .ds-icon,
 .detailListItem-chevron .ds-icon,
 .detailListItem-titleInfo .ds-icon,
 .listItem-trailing .ds-icon,
 .listItem-leading .ds-icon,
-.statBox-icon .ds-icon,
 .order-back .ds-icon { width: 24px; height: 24px; }
 .order-market-status .ds-icon { width: 16px; height: 16px; }
 .order-last-updated .ds-icon { width: 13px; height: 13px; flex-shrink: 0; }
@@ -1319,12 +1317,19 @@ html, body {
 }
 .searchField-input::placeholder { color: var(--text-light); font-weight: 400; }
 .searchField-input:focus         { outline: none; }
+/* Hide browser-native clear on type=search (custom .searchField-clear uses ic-close) */
+.searchField-input::-webkit-search-cancel-button,
+.searchField-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
 .searchField--filled .searchField-input { font-weight: 500; }
 
 .searchField-clear {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: var(--sp-16);
+  height: var(--sp-16);
   display: none;
   align-items: center;
   justify-content: center;
@@ -1334,6 +1339,10 @@ html, body {
   cursor: pointer;
   padding: 0;
   transition: color .12s ease;
+}
+.searchField-clear .ds-icon {
+  width: var(--sp-16);
+  height: var(--sp-16);
 }
 .searchField--filled .searchField-clear { display: inline-flex; }
 .searchField-clear:hover { color: var(--text-main); }
@@ -1795,7 +1804,7 @@ html, body {
 .statBox-valueRow {
   display: flex;
   align-items: center;
-  gap: var(--sp-4);
+  gap: var(--sp-6);
   min-width: 0;
 }
 .statBox--center .statBox-valueRow { justify-content: center; }
@@ -1804,12 +1813,13 @@ html, body {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
   line-height: 0;
 }
-.statBox-icon img {
-  display: block;
-  width: 20px;
-  height: 20px;
+.statBox-icon .ds-icon {
+  width: var(--sp-16);
+  height: var(--sp-16);
 }
 .statBox--small .value { font-size: var(--fs-14); line-height: var(--lh-14); }
 .statBox--medium .value { font-size: var(--fs-16); line-height: var(--lh-16); font-weight: 600; }
@@ -1922,7 +1932,7 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--sp-4);
+  gap: var(--sp-6);
   min-width: 0;
 }
 .keyValueRow-value {

@@ -137,7 +137,7 @@
               <p class="label">Est. Total (USD)</p>
               <div class="statBox-valueRow">
                 <p class="value" id="order-est-total">394,974</p>
-                <span class="statBox-icon" aria-hidden="true"><img class="ds-icon" src="assets/icons/ic-chevron-right.svg" width="20" height="20" alt="" aria-hidden="true"></span>
+                <span class="statBox-icon" aria-hidden="true"><img class="ds-icon" src="assets/icons/ic-chevron-right.svg" width="16" height="16" alt="" aria-hidden="true"></span>
               </div>
             </div>
             <button class="cta-btn cta-btn--primary cta-btn--lg order-buy-btn" type="button">Buy Now</button>
@@ -255,12 +255,21 @@
                   <span class="component-title">Optional text</span>
                   <input id="statbox-frequency-toggle" type="checkbox" aria-label="Toggle optional frequency line" />
                 </label>
+                <label class="toggle-row" for="statbox-icon-toggle">
+                  <span class="component-title">Chevron</span>
+                  <input id="statbox-icon-toggle" type="checkbox" aria-label="Toggle chevron after value" />
+                </label>
               </div>
 
               <div class="statbox-preview-wrap">
                 <div id="statbox-preview" class="statBox statBox--small">
                   <p class="label">Trade date</p>
-                  <p class="value" id="statbox-value">09 Apr '26</p>
+                  <div class="statBox-valueRow">
+                    <p class="value" id="statbox-value">09 Apr '26</p>
+                    <span id="statbox-icon" class="statBox-icon hidden" aria-hidden="true">
+                      <img class="ds-icon" src="assets/icons/ic-chevron-right.svg" width="16" height="16" alt="" aria-hidden="true">
+                    </span>
+                  </div>
                   <p class="supportingText hidden" id="statbox-frequency"><span class="supportingText-label">Freq: </span>Monthly</p>
                 </div>
               </div>
@@ -791,7 +800,7 @@
                   <span class="searchField-icon" aria-hidden="true">
                     <img class="ds-icon" src="assets/icons/ic-search.svg" width="18" height="18" alt="" aria-hidden="true">
                   </span>
-                  <input id="sf-preview-input" class="searchField-input" type="search" placeholder="Search products…" autocomplete="off" />
+                  <input id="sf-preview-input" class="searchField-input" type="text" role="searchbox" placeholder="Search products…" autocomplete="off" />
                   <button id="sf-preview-clear" class="searchField-clear" type="button" aria-label="Clear search">
                     <img class="ds-icon" src="assets/icons/ic-close.svg" width="16" height="16" alt="" aria-hidden="true">
                   </button>
