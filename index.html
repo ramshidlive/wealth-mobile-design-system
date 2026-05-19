@@ -163,29 +163,40 @@
       </header>
 
       <div id="panel-base" class="ds-panel hidden">
-        <button id="base-back-btn" class="ds-base-back">
-          <img class="ds-icon" src="assets/icons/ic-arrow-left.svg" width="16" height="16" alt="" aria-hidden="true">
-          Components
-        </button>
-        <div class="ds-scroll">
+        <div class="base-header">
+          <button id="base-back-btn" class="ds-base-back">
+            <img class="ds-icon" src="assets/icons/ic-arrow-left.svg" width="16" height="16" alt="" aria-hidden="true">
+            Components
+          </button>
+          <div class="ds-tabs base-view-tabs" role="tablist" aria-label="Token view">
+            <button class="ds-tab is-active" data-base-tab="visual" role="tab" aria-selected="true">Visual</button>
+            <button class="ds-tab" data-base-tab="tokens" role="tab" aria-selected="false">Token list</button>
+          </div>
+        </div>
+
+        <div class="ds-scroll" id="base-tab-visual">
           <div class="section">
             <h2 class="section-title">Colors</h2>
             <div id="colors-grid" class="swatch-grid"></div>
           </div>
-
           <div class="section">
             <h2 class="section-title">Typography</h2>
             <div id="typography-list"></div>
           </div>
-
           <div class="section">
             <h2 class="section-title">Spacing</h2>
             <div id="spacing-list"></div>
           </div>
-
           <div class="section">
             <h2 class="section-title">Radius</h2>
             <div id="radius-grid" class="radius-grid"></div>
+          </div>
+        </div>
+
+        <div class="ds-scroll hidden" id="base-tab-tokens">
+          <div class="section">
+            <p class="token-ref-hint">Click any token to copy <code>var(--token)</code></p>
+            <div id="token-ref"></div>
           </div>
         </div>
       </div>

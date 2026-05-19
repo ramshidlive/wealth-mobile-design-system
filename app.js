@@ -102,6 +102,143 @@ radii.forEach(r => {
   radiusGrid.appendChild(el);
 });
 
+// ---------- Token reference ----------
+const TOKEN_GROUPS = [
+  { label: 'Color · Text', type: 'color', tokens: [
+    { name: '--text-main',    value: '#111E2E', note: 'Primary text' },
+    { name: '--text-muted',   value: '#828A96', note: 'Secondary / hint text' },
+    { name: '--text-light',   value: '#B1B7C0', note: 'Disabled / placeholder' },
+    { name: '--text-green',   value: '#04B08D', note: 'Positive / gain' },
+    { name: '--text-red',     value: '#FF3273', note: 'Negative / loss' },
+    { name: '--text-warning', value: '#FF3273', note: 'Warning text' },
+  ]},
+  { label: 'Color · Border', type: 'color', tokens: [
+    { name: '--border-strong',        value: '#CED1D9', note: 'Input borders' },
+    { name: '--border-medium',        value: '#E7E8EC', note: 'Dividers' },
+    { name: '--border-light',         value: '#EBEDF0', note: 'Subtle separators' },
+    { name: '--border-danger',        value: '#FF3273', note: 'Error state border' },
+    { name: '--border-danger-light',  value: '#FFEDF2', note: 'Error state fill' },
+    { name: '--border-accent',        value: '#ED5E26', note: 'Selected / active / CTA accent' },
+    { name: '--border-accent-light',  value: '#FFF3EE', note: 'Accent fill / tinted bg' },
+  ]},
+  { label: 'Color · Surface', type: 'color', tokens: [
+    { name: '--surface-white',       value: '#FFFFFF', note: 'Card / sheet background' },
+    { name: '--surface-bg',          value: '#F5F6F7', note: 'Page background' },
+    { name: '--surface-card',        value: '#FAFBFC', note: 'Elevated card' },
+    { name: '--surface-pink',        value: '#FEF6F7', note: 'Loss tinted surface' },
+    { name: '--surface-teal',        value: '#EBF9F6', note: 'Gain tinted surface' },
+    { name: '--surface-cta-primary', value: '#21262C', note: 'Dark CTA button bg' },
+  ]},
+  { label: 'Color · Banner', type: 'color', tokens: [
+    { name: '--banner-warning-bg',     value: '#FFF8EC', note: 'Warning banner background' },
+    { name: '--banner-warning-border', value: '#F2D49F', note: 'Warning banner border' },
+    { name: '--banner-warning-text',   value: '#9A6506', note: 'Warning banner text' },
+    { name: '--banner-success-bg',     value: '#EFFBF6', note: 'Success banner background' },
+    { name: '--banner-success-border', value: '#BCE8DA', note: 'Success banner border' },
+    { name: '--banner-success-text',   value: '#0F7E63', note: 'Success banner text' },
+    { name: '--banner-danger-bg',      value: '#FFF4F6', note: 'Danger banner background' },
+    { name: '--banner-danger-border',  value: '#F6C8D1', note: 'Danger banner border' },
+    { name: '--banner-danger-text',    value: '#FF3273', note: 'Danger banner text' },
+  ]},
+  { label: 'Typography', type: 'type', tokens: [
+    { name: '--fs-11', value: '11px', pair: '--lh-11', pairVal: '14px', note: 'caption' },
+    { name: '--fs-12', value: '12px', pair: '--lh-12', pairVal: '16px', note: 'label' },
+    { name: '--fs-14', value: '14px', pair: '--lh-14', pairVal: '20px', note: 'body' },
+    { name: '--fs-16', value: '16px', pair: '--lh-16', pairVal: '22px', note: 'lead' },
+    { name: '--fs-18', value: '18px', pair: '--lh-18', pairVal: '24px', note: 'h3' },
+    { name: '--fs-24', value: '24px', pair: '--lh-24', pairVal: '30px', note: 'h2' },
+    { name: '--fs-28', value: '28px', pair: '--lh-28', pairVal: '34px', note: 'h1' },
+    { name: '--fs-32', value: '32px', pair: '--lh-32', pairVal: '38px', note: 'display' },
+  ]},
+  { label: 'Spacing', type: 'spacing',
+    tokens: [2,4,6,8,12,16,20,24,32,40,48,64].map(n => ({ name: '--sp-' + n, value: n + 'px' })) },
+  { label: 'Border radius', type: 'radius', tokens: [
+    { name: '--r-4',    value: '4px' },
+    { name: '--r-8',    value: '8px' },
+    { name: '--r-10',   value: '10px' },
+    { name: '--r-12',   value: '12px' },
+    { name: '--r-16',   value: '16px' },
+    { name: '--r-20',   value: '20px' },
+    { name: '--r-24',   value: '24px' },
+    { name: '--r-1000', value: '1000px', note: 'pill' },
+  ]},
+  { label: 'Font', type: 'font', tokens: [
+    { name: '--font-stack', value: '"Geist", system-ui, sans-serif', note: 'Use on root element only' },
+  ]},
+];
+
+function copyTokenVar(name) {
+  const text = 'var(' + name + ')';
+  navigator.clipboard?.writeText(text).catch(() => {});
+  return text;
+}
+
+(function renderTokenRef() {
+  const container = document.getElementById('token-ref');
+  if (!container) return;
+  TOKEN_GROUPS.forEach(group => {
+    const groupEl = document.createElement('div');
+    groupEl.className = 'tok-group';
+    const labelEl = document.createElement('p');
+    labelEl.className = 'tok-group-label';
+    labelEl.textContent = group.label;
+    groupEl.appendChild(labelEl);
+    const table = document.createElement('div');
+    table.className = 'tok-table';
+    if (group.type === 'color') {
+      group.tokens.forEach(tok => {
+        const row = document.createElement('button');
+        row.className = 'tok-row tok-row--color';
+        row.title = 'Click to copy var(' + tok.name + ')';
+        row.innerHTML = '<span class="tok-swatch" style="background:' + tok.value + '"></span>' +
+          '<code class="tok-name">' + tok.name + '</code>' +
+          '<span class="tok-val">' + tok.value + '</span>' +
+          '<span class="tok-note">' + (tok.note || '') + '</span>';
+        row.addEventListener('click', () => {
+          copyTokenVar(tok.name);
+          row.classList.add('tok-row--copied');
+          setTimeout(() => row.classList.remove('tok-row--copied'), 1200);
+        });
+        table.appendChild(row);
+      });
+    } else if (group.type === 'type') {
+      group.tokens.forEach(tok => {
+        const row = document.createElement('button');
+        row.className = 'tok-row tok-row--type';
+        row.title = 'Click to copy var(' + tok.name + ')';
+        row.innerHTML = '<code class="tok-name">' + tok.name + '</code>' +
+          '<span class="tok-val">' + tok.value + '</span>' +
+          '<code class="tok-name tok-name--secondary">' + tok.pair + '</code>' +
+          '<span class="tok-val">' + tok.pairVal + '</span>' +
+          '<span class="tok-note">' + (tok.note || '') + '</span>';
+        row.addEventListener('click', () => {
+          copyTokenVar(tok.name);
+          row.classList.add('tok-row--copied');
+          setTimeout(() => row.classList.remove('tok-row--copied'), 1200);
+        });
+        table.appendChild(row);
+      });
+    } else {
+      group.tokens.forEach(tok => {
+        const row = document.createElement('button');
+        row.className = 'tok-row';
+        row.title = 'Click to copy var(' + tok.name + ')';
+        row.innerHTML = '<code class="tok-name">' + tok.name + '</code>' +
+          '<span class="tok-val">' + tok.value + '</span>' +
+          (tok.note ? '<span class="tok-note">' + tok.note + '</span>' : '');
+        row.addEventListener('click', () => {
+          copyTokenVar(tok.name);
+          row.classList.add('tok-row--copied');
+          setTimeout(() => row.classList.remove('tok-row--copied'), 1200);
+        });
+        table.appendChild(row);
+      });
+    }
+    groupEl.appendChild(table);
+    container.appendChild(groupEl);
+  });
+})();
+
 // ---------- Navigation ----------
 const canvas    = document.querySelector('.canvas');
 const device    = document.querySelector('.device');
@@ -166,6 +303,23 @@ document.getElementById('sidebar-base-link')?.addEventListener('click', e => {
 });
 document.getElementById('base-back-btn')?.addEventListener('click', () => {
   showPanel('components');
+});
+
+// ---------- Base panel tab toggle ----------
+const baseTabVisual = document.getElementById('base-tab-visual');
+const baseTabTokens = document.getElementById('base-tab-tokens');
+document.querySelectorAll('[data-base-tab]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-base-tab]').forEach(b => {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('is-active');
+    btn.setAttribute('aria-selected', 'true');
+    const tab = btn.dataset.baseTab;
+    baseTabVisual.classList.toggle('hidden', tab !== 'visual');
+    baseTabTokens.classList.toggle('hidden', tab !== 'tokens');
+  });
 });
 
 // ---------- Components sidebar ----------
