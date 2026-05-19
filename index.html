@@ -171,6 +171,7 @@
           <div class="ds-tabs base-view-tabs" role="tablist" aria-label="Token view">
             <button class="ds-tab is-active" data-base-tab="visual" role="tab" aria-selected="true">Visual</button>
             <button class="ds-tab" data-base-tab="tokens" role="tab" aria-selected="false">Token list</button>
+            <button class="ds-tab" data-base-tab="icons" role="tab" aria-selected="false">Icons</button>
           </div>
         </div>
 
@@ -197,6 +198,17 @@
           <div class="section">
             <p class="token-ref-hint">Click any token to copy <code>var(--token)</code></p>
             <div id="token-ref"></div>
+          </div>
+        </div>
+
+        <div class="ds-scroll hidden" id="base-tab-icons">
+          <div class="section">
+            <div class="icon-search-wrap">
+              <img class="icon-search-ic" src="assets/icons/ic-search.svg" width="16" height="16" alt="" aria-hidden="true">
+              <input id="icon-search" class="icon-search-input" type="search" placeholder="Search icons…" autocomplete="off">
+            </div>
+            <p id="icon-empty" class="icon-empty hidden">No icons match your search.</p>
+            <div id="icons-grid" class="icons-grid"></div>
           </div>
         </div>
       </div>

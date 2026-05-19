@@ -308,6 +308,7 @@ document.getElementById('base-back-btn')?.addEventListener('click', () => {
 // ---------- Base panel tab toggle ----------
 const baseTabVisual = document.getElementById('base-tab-visual');
 const baseTabTokens = document.getElementById('base-tab-tokens');
+const baseTabIcons  = document.getElementById('base-tab-icons');
 document.querySelectorAll('[data-base-tab]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('[data-base-tab]').forEach(b => {
@@ -319,8 +320,67 @@ document.querySelectorAll('[data-base-tab]').forEach(btn => {
     const tab = btn.dataset.baseTab;
     baseTabVisual.classList.toggle('hidden', tab !== 'visual');
     baseTabTokens.classList.toggle('hidden', tab !== 'tokens');
+    baseTabIcons.classList.toggle('hidden',  tab !== 'icons');
   });
 });
+
+// ---------- Icons tab ----------
+const ICONS = [
+  'ic-alert','ic-arrow-left','ic-arrow-right','ic-calendar','ic-camera',
+  'ic-check-circle','ic-check-filled','ic-chevron-left','ic-chevron-right',
+  'ic-circle','ic-close','ic-copy','ic-info-filled','ic-info','ic-loading',
+  'ic-minus','ic-moon-dark','ic-moon','ic-plus','ic-refresh','ic-search',
+  'ic-sun','ic-time-half','ic-timer','ic-upload','ic-warning',
+];
+
+(function renderIcons() {
+  const grid  = document.getElementById('icons-grid');
+  const input = document.getElementById('icon-search');
+  const empty = document.getElementById('icon-empty');
+  if (!grid) return;
+
+  ICONS.forEach(name => {
+    const cell = document.createElement('div');
+    cell.className = 'icon-cell';
+    cell.dataset.name = name;
+
+    const preview = document.createElement('div');
+    preview.className = 'icon-preview';
+    const img = document.createElement('img');
+    img.src = 'assets/icons/' + name + '.svg';
+    img.width = 48;
+    img.height = 48;
+    img.alt = name;
+    preview.appendChild(img);
+
+    const label = document.createElement('span');
+    label.className = 'icon-label';
+    label.textContent = name;
+
+    const dl = document.createElement('a');
+    dl.className = 'icon-dl';
+    dl.href = 'assets/icons/' + name + '.svg';
+    dl.download = name + '.svg';
+    dl.title = 'Download ' + name + '.svg';
+    dl.innerHTML = '<img src="assets/icons/ic-upload.svg" width="14" height="14" alt="Download" style="transform:rotate(180deg)">';
+
+    cell.appendChild(preview);
+    cell.appendChild(label);
+    cell.appendChild(dl);
+    grid.appendChild(cell);
+  });
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+    grid.querySelectorAll('.icon-cell').forEach(cell => {
+      const match = cell.dataset.name.includes(q);
+      cell.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    empty.classList.toggle('hidden', visible > 0);
+  });
+})();
 
 // ---------- Components sidebar ----------
 const sidebarLinks = Array.from(document.querySelectorAll('.ds-sidebar-link[href^="#section"]'));
