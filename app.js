@@ -327,9 +327,10 @@ document.querySelectorAll('[data-base-tab]').forEach(btn => {
 // ---------- Icons tab ----------
 const ICONS = [
   'ic-alert','ic-arrow-left','ic-arrow-right','ic-calendar','ic-camera',
-  'ic-check-circle','ic-check-filled','ic-chevron-left','ic-chevron-right',
-  'ic-circle','ic-close','ic-copy','ic-info-filled','ic-info','ic-loading',
-  'ic-minus','ic-moon-dark','ic-moon','ic-plus','ic-refresh','ic-search',
+  'ic-check-circle','ic-check-filled','ic-checkbox-active','ic-checkbox-default',
+  'ic-chevron-left','ic-chevron-right','ic-circle','ic-close','ic-copy',
+  'ic-info-filled','ic-info','ic-loading','ic-minus','ic-moon-dark','ic-moon',
+  'ic-plus','ic-radio-active','ic-radio-default','ic-refresh','ic-search',
   'ic-sun','ic-time-half','ic-timer','ic-upload','ic-warning',
 ];
 
